@@ -1,0 +1,121 @@
+.faqs_section {
+  width: 100%;
+  margin: 50px auto;
+  background-color: #fff;
+}
+.inner_section {
+  width: 70%;
+  height: auto;
+  margin: auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.accordion {
+  border: 1px solid #ebeff6;
+  background-color: #fff;
+
+  padding: 34px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.accordion_head span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* Opened Accordion */
+.accordion.active {
+  border: 1px solid #155dfc;
+}
+
+/* Accordion Header */
+.accordion_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Rotating Arrow Icon */
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.icon.rotate {
+  transform: rotate(180deg);
+}
+
+/* Accordion Content (Hidden by Default) */
+.accordion_content {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+/* .accordion_content p{
+    font-size: 16px;
+    line-height: 1.3em;
+  } */
+/* Show Content When Open */
+.accordion.active .accordion_content {
+  max-height: 200px;
+  opacity: 1;
+  transform: translateY(0);
+  padding: 20px 0 0;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-in-out;
+}
+.faq_answer {
+  font-size: 16px;
+  line-height: 2.4em;
+}
+@media (max-width: 768px) {
+  .inner_section {
+    width: 90%;
+    height: auto;
+  }
+  .accordion_head span {
+    font-size: 16px;
+  }
+  .faq_answer {
+    font-size: 14px;
+  }
+  .accordion {
+    padding: 20px;
+  }
+  .inner_section {
+    row-gap: 16px;
+  }
+  .faq_title {
+    font-size: 20px !important;
+  }
+}
+.faq_title {
+  font-size: 32px;
+}
+* {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
