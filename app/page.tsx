@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import AiInput from "@/components/ui/ai-input";
 import Faqs from "@/components/faq/faq";
@@ -75,7 +75,7 @@ export default function Home() {
                     {previewData.description}
                   </p>
                   {previewData.image && (
-                    <img
+                    <Image
                       src={previewData.image}
                       alt="Preview"
                       className="rounded-lg"

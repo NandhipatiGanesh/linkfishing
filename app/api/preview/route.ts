@@ -17,13 +17,16 @@ export async function GET(req: NextRequest) {
 
     // Type guard to check if expected fields exist
     const isLinkPreview = (
-      data: any
+      data: unknown
     ): data is {
       title?: string;
       description?: string;
       images?: string[];
       url?: string;
-    } => "title" in data || "description" in data || "images" in data;
+    } =>
+      typeof data === "object" &&
+      data !== null &&
+      ("title" in data || "description" in data || "images" in data);
 
     if (isLinkPreview(preview)) {
       return NextResponse.json({
@@ -38,8 +41,9 @@ export async function GET(req: NextRequest) {
       { error: "No preview metadata found" },
       { status: 404 }
     );
-  } catch (error: any) {
-    console.error("Preview API Error:", error.message);
+  } catch (error) {
+    const err = error as Error;
+    console.error("Preview API Error:", err.message);
     return NextResponse.json(
       { error: "Failed to fetch preview" },
       { status: 500 }

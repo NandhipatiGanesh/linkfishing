@@ -1,9 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image"; // ✅ Fix for <img> warning
+
+interface PreviewData {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+}
 
 export default function LinkPreview({ url }: { url: string }) {
-  const [preview, setPreview] = useState<any>(null);
+  const [preview, setPreview] = useState<PreviewData | null>(null); // ✅ Replaced `any`
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -15,8 +23,8 @@ export default function LinkPreview({ url }: { url: string }) {
         const data = await res.json();
         setPreview(data);
         setError(false);
-      } catch (err) {
-        setError(true);
+      } catch {
+        setError(true); // ✅ Removed unused `err`
       }
     };
 
@@ -28,16 +36,21 @@ export default function LinkPreview({ url }: { url: string }) {
 
   return (
     <div className="border rounded-lg p-4 mt-4 max-w-xl mx-auto">
-      <img
-        src={preview.image}
-        alt={preview.title}
-        className="rounded mb-2 w-full h-40 object-cover"
-      />
+      {preview.image && (
+        <Image
+          src={preview.image}
+          alt={preview.title}
+          width={600}
+          height={160}
+          className="rounded mb-2 w-full h-40 object-cover"
+        />
+      )}
       <h2 className="text-lg font-bold">{preview.title}</h2>
       <p className="text-sm text-gray-600">{preview.description}</p>
       <a
         href={preview.url}
         target="_blank"
+        rel="noopener noreferrer"
         className="text-blue-500 text-sm block mt-2"
       >
         {preview.url}

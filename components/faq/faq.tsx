@@ -46,7 +46,7 @@ export default function Faqs() {
         </h2>
         <div className={`faq_wrapper inner_section  "fade-in" : "opacity-0"}`}>
           {faqs.map((faq, index) => (
-            <div className="bg-white shadow p-1 rounded-[22px]">
+            <div key={index} className="bg-white shadow p-1 rounded-[22px]">
               <div
                 key={index}
                 className={`accordion !bg-black/5 !border rounded-[22px] !border-black/5 ${
