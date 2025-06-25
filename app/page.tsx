@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import AiInput from "@/components/ui/ai-input";
 import Faqs from "@/components/faq/faq";
-import LinkPreview from "@/components/LinkPreview";
+
 
 interface PreviewData {
   title: string;
