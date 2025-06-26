@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import AiInput from "@/components/ui/ai-input";
 import Faqs from "@/components/faq/faq";
 
-
 interface PreviewData {
   title: string;
   description: string;
@@ -32,15 +31,25 @@ export default function Home() {
 
     const fetchPreview = async (url: string) => {
       try {
-        console.log("Fetching preview for:", url); // 👈 log this
-        const res = await fetch(`/api/preview?url=${encodeURIComponent(url)}`);
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_BASE_URL
+          }/check-url?url=${encodeURIComponent(url)}`
+        );
         if (!res.ok) throw new Error("Fetch failed");
         const data = await res.json();
-        setPreviewData(data);
+        setPreviewData({
+          title: "Checked Link",
+          description: data.safe
+            ? "This link appears to be safe."
+            : "⚠️ This link may contain threats.",
+          image: "/link-preview.png", // optional fallback preview image
+          url: data.url,
+        });
         setError("");
       } catch (err) {
-        console.error("Client Error:", err); // 👈 also log this
-        setError("Failed to fetch preview");
+        console.error("Client Error:", err);
+        setError("Failed to check the URL");
       }
     };
 
@@ -71,14 +80,31 @@ export default function Home() {
               ) : previewData ? (
                 <div className="space-y-4">
                   <h2 className="text-xl font-semibold">{previewData.title}</h2>
-                  <p className="text-sm text-gray-600">
-                    {previewData.description}
-                  </p>
+                  <div className="flex items-center gap-2 text-green-600 font-medium">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5 text-green-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span>This link appears to be safe.</span>
+                  </div>
+
                   {previewData.image && (
                     <Image
                       src={previewData.image}
                       alt="Preview"
                       className="rounded-lg"
+                      width={600}
+                      height={400}
                     />
                   )}
                   <a
